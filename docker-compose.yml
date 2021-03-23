@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+    backend:
+        build: 
+            context: .
+            dockerfile: packages/backend/dockerfile.dev
+        image: modulist-backend
+        container_name: modulist-backend
+        ports: 
+            - '3001:3000'
+        volumes: 
+            - ./packages/backend/src:/app/packages/backend/src

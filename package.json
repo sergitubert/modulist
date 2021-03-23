@@ -1,0 +1,11 @@
+{
+  "name": "@modulist/monorepo",
+  "author": "Sergi Tubert <stubertsabater@gmail.com>",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "nohoist": [
+    "**"
+  ]
+}

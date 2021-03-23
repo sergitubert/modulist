@@ -1,0 +1,26 @@
+FROM node:12-alpine3.11 AS install
+WORKDIR /app
+
+# build python for bcrypt
+#RUN apk --no-cache add --virtual builds-deps build-base python
+
+COPY package.json .
+COPY yarn.lock .
+COPY tsconfig.json .
+
+COPY ./packages/backend/package.json ./packages/backend/package.json
+COPY ./packages/backend/tsconfig.json ./packages/backend/tsconfig.json
+COPY ./packages/backend/tsconfig.build.json ./packages/backend/tsconfig.build.json
+COPY ./packages/backend/.eslintrc.js ./packages/backend/.eslintrc.js
+COPY ./packages/backend/nest-cli.json ./packages/backend/nest-cli.json
+
+COPY ./packages/backend/env/.env ./packages/backend/env/.env
+
+RUN yarn install
+
+COPY ./packages/backend/src ./packages/backend/src
+
+WORKDIR /app/packages/backend
+CMD ["yarn", "workspace", "@modulist/backend", "run", "start:dev"]
+
+EXPOSE 3000
