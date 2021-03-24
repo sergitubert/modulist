@@ -25,5 +25,5 @@ yarn-debug.log*
 yarn-error.log*
 
 /src/css/styles.css
-/env/.env
+/packages/backend/env/.env
 

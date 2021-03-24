@@ -20,7 +20,6 @@ RUN yarn install
 
 COPY ./packages/backend/src ./packages/backend/src
 
-WORKDIR /app/packages/backend
 CMD ["yarn", "workspace", "@modulist/backend", "run", "start:dev"]
 
 EXPOSE 3000
