@@ -1,21 +1,30 @@
-FROM node:lts-alpine
+FROM node:12-alpine3.11 AS install
 
 # set working directory
 WORKDIR /app
 
-
-
 # install app dependencies
 COPY package.json ./
 COPY yarn.lock ./
-RUN npm install
+COPY tsconfig.json ./
+
+COPY ./packages/frontend/package.json ./packages/frontend/package.json
+COPY ./packages/frontend/tsconfig.json ./packages/frontend/tsconfig.json
+COPY ./packages/frontend/postcss.config.js ./packages/frontend/postcss.config.js
+COPY ./packages/frontend/tailwind.config.js ./packages/frontend/tailwind.config.js
+COPY ./packages/frontend/env/.env ./packages/frontend/env/.env
+
+RUN yarn install
 
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
 # add app
-COPY . ./
+COPY ./packages/frontend/src ./packages/frontend/src
+COPY ./packages/frontend/public ./packages/frontend/public
+
+CMD ["yarn", "workspace", "@modulist/frontend", "run", "start"]
+
 
 EXPOSE 3000
 # start app
-CMD ["npm", "run" , "start"]
