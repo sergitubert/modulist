@@ -20,14 +20,19 @@ export class AuthGoogleController {
     @Get('/callback')
     @UseGuards(GoogleLoginGuard)
     loginCallback(@Req() req: Request, @Res() res: Response) {
-        res.cookie('userID', req.user["_id"], { httpOnly: false, signed: false })
+        res.cookie('userID', req.user["_id"], { httpOnly: false, signed: false });
+        res.header('Access-Control-Allow-Credentials', 'true')
+        res.header('Access-Control-Allow-Origin', this.CLIENT_HOME_URL);
         res.redirect(this.CLIENT_HOME_URL);
     }
 
     @Get('/user')
-    async user(@Req() req: Request) {
+    async user(@Req() req: Request, @Res() res: Response) {
+        res.header('Access-Control-Allow-Credentials', 'true')
+        res.header('Access-Control-Allow-Origin', this.CLIENT_HOME_URL);
         if (!req.user) throw new NotFoundException();
-        return await this.userFinder.run(new UserId(req.user["_id"]))
+        const user = await this.userFinder.run(new UserId(req.user["_id"]))
+        res.send(user)
     }
 
     @Get('/logout')

@@ -26,5 +26,6 @@ yarn-error.log*
 
 /packages/frontend/src/css/styles.css
 /packages/backend/env/.env
+/packages/backend/dist
 /packages/frontend/env/.env
 

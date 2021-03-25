@@ -9,7 +9,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors({
-    credentials: true
+    credentials: true,
   });
 
   // TODO: SET STORE IN REDIS

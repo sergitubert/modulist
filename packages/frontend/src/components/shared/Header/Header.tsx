@@ -19,7 +19,7 @@ export default function Header() {
 
         const checkUser = async () => {
             try {
-                const response = await fetch(`/auth/google/user`);
+                const response = await fetch(`http://localhost:3001/auth/google/user`, { credentials: 'include' });
                 const userResponse: User = await response.json();
                 if (response.status !== 200) throw new Error();
                 setHasUser(true)
